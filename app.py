@@ -5,7 +5,7 @@ from flask import Flask, request, render_template, redirect, url_for
 
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Escritorio\\Pagina_web\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
 
 @app.route("/")
 def index():
