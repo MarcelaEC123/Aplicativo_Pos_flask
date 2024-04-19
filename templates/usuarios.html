@@ -1,0 +1,315 @@
+<!-- usuarios.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-NwF3tBdYF4JcJjU4pN3nI9an2P+iK8a/1qdzNm5/lf7dUq0HfdvpBfB5SvOzJ4tv" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Página con Menú</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="/static/images/logo.png" alt="Logo">
+                </div>
+                <br>
+                
+                <div class="user-icon">
+                    <img src="/static/images/usuario-de-perfil.png" alt="User Icon">
+                </div>
+                <div class="admin-name">
+                    <span>Administrador</span>
+                </div>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('principal') }}"><i class="fas fa-home"></i> Inicio</a></li>
+                <br>
+                <li><a href="{{ url_for('caja') }}"><i class="fas fa-cash-register"></i> Caja</a></li>
+                <br>
+                <li><a href="{{ url_for('clientes') }}"><i class="fas fa-users"></i> Clientes</a></li>
+                <br>
+                <li><a href="{{ url_for('proveedores') }}"><i class="fas fa-user-tie"></i> Proveedor</a></li>
+                <br>
+                <li><a href="{{ url_for('productos') }}"><i class="fas fa-box"></i> Productos</a></li>
+                <br>
+                <li><a href="{{ url_for('usuarios') }}"><i class="fas fa-box"></i> Usuarios</a></li>
+            </ul>
+            
+           
+        </div>
+        <a href="{{ url_for('logout') }}" class="logout-link">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </a>       
+          
+        <div class="content d-flex flex-column " >
+            <!-- Contenido principal -->
+            <h3>Usuarios</h3>     
+                <div class="horizontal-bar my-4 d-flex py-2 justify-content-end " >
+                    <img src="/static/images/agregar.png" alt="agregar" class="icon" onclick="openModal()">
+                    <input type="text" id="search-input" placeholder="Buscar...">
+                </div>
+                
+                    <table class="table table-bordered">
+                        <thead>
+                            <th scope="col">Id_usuario</th>
+                            <th scope="col">Nombre</th> 
+                            <th scope="col">Tipo_Identificacion</th>
+                            <th scope="col">Numero_identificacion</th> 
+                            <th scope="col">Telefono</th> 
+                            <th scope="col">Email</th> 
+                            <th scope="col">Usuario</th> 
+                            <th scope="col">Contrasenia</th>
+                            <th scope="col">Tipo_usuario</th>
+                            <th scope="col" colspan="2">Acciones</th> 
+                        </thead>
+                    
+                    <tbody >
+                        {% for d in data %}
+                            <tr>
+                                <td>{{d.id_usuario}}</td>
+                                <td>{{d.nombre}}</td>
+                                <td>{{d.tipo_identificacion}}</td>
+                                <td>{{d.numero_identificacion}}</td>
+                                <td>{{d.telefono}}</td>
+                                <td>{{d.email}}</td>
+                                <td>{{d.usuario}}</td>
+                                <td>************</td>
+                                <td>{{d.tipo_usuario}}</td>
+                                <td><a href="{{url_for('deleteUsuarios', id_usuario=d.id_usuario)}}" class="btn btn-danger btn-sm">Eliminar</a></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm" onclick="openEditModal('{{d.id_usuario}}', '{{d.nombre}}','{{d.tipo_identificacion}}', '{{d.numero_identificacion}}', '{{d.telefono}}', '{{d.email}}', '{{d.usuario}}', '{{d.contrasenia}}', '{{d.tipo_usuario}}')">Editar</button>
+                                </td>    
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+        </div>
+         <!-- Ventana modal agregar usuario -->
+         <div id="myModal" class="modal">
+            <div class="modal-content">
+                <form action="/guardarUsuario" id="venta_form" method="post" >
+                    <div class="modal-header">
+                        <h2 >Nuevo Usuario</h2>
+                        <span class="close " onclick="closeModal()">×</span>
+                    </div>
+            <div class="modal-body">
+                <div class="caja1">
+                     <div class="form-group">
+                        <label for="id_usuario">Id_usuario:</label>
+                        <input type="text" id="id_usuario" name="id_usuario" value="{{ next_id }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">nombre:</label>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo_identificacion">tipo Identificacion:</label>
+                        <select id="tipo_identificacion" name="tipo_identificacion">
+                            <option value="CC">CC</option>
+                            <option value="CE">CE</option>
+                            <option value="NIT">NIT</option>
+                            <option value="RC">RC</option>
+                            <option value="OTRO">OTRO</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero_identificacion">numero_identificacion:</label>
+                        <input type="text" id="numero_identificacion" name="numero_identificacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">telefono:</label>
+                        <input type="text" id="telefono" name="telefono">
+                    </div>
+                </div>
+                <div class="caja1">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="usuario">usuario:</label>
+                        <input type="text" id="usuario" name="usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="contrasenia">Contraseña:</label>
+                        <input type="password" id="contrasenia" name="contrasenia">
+                    </div>                    
+                    <div class="form-group">
+                        <label for="tipo_usuario">tipo_usuario:</label>
+                        <select id="tipo_usuario" name="tipo_usuario">
+                            <option value="Administrador">Administrador</option>
+                            <option value="Vendedor">Vendedor</option>
+                        </select>
+                     </div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="closeModal()">Cancelar</button>
+                <button type="submit" class="btn btn-default">Guardar cambios</button>
+            </div>
+    </div>
+</div>
+
+
+        <!-- Ventana modal de edición -->
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <form id="edit-form" method="post">
+                    <div class="modal-header">
+                        <h2>Editar Usuario</h2>
+                        <span class="close" onclick="closeModal2()">×</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="caja1">
+                            <input type="hidden" id="edit_id_usuario" name="id_usuario">               
+                            <div class="form-group">
+                                <label for="edit_nombre">nombre:</label>
+                                <input type="text" id="edit_nombre" name="edit_nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_tipo_identificacion">Tipo Identificacion:</label>
+                                <select id="edit_tipo_identificacion" name="edit_tipo_identificacion">
+                                    <option value="CC">CC</option>
+                                    <option value="CE">CE</option>
+                                    <option value="NIT">NIT</option>
+                                    <option value="RC">RC</option>
+                                    <option value="OTRO">OTRO</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_numero_identificacion">Numero_identificacion:</label>
+                                <input type="text" id="edit_numero_identificacion" name="edit_numero_identificacion">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_telefono">Telefono:</label>
+                                <input type="text" id="edit_telefono" name="edit_telefono">
+                            </div>
+                        </div>
+                        <div class="caja1">
+                            <div class="form-group">
+                                <label for="edit_email">Email:</label>
+                                <input type="text" id="edit_email" name="edit_email">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_usuario">Usuario:</label>
+                                <input type="text" id="edit_usuario" name="edit_usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_contrasenia">Contraseña:</label>
+                                <input type="password" id="edit_contrasenia" name="edit_contrasenia">
+                            </div>                    
+                            <div class="form-group">
+                                <label for="edit_tipo_usuario">tipo_usuario:</label>
+                                <select id="edit_tipo_usuario" name="edit_tipo_usuario">
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Vendedor">Vendedor</option>
+                                </select>
+                             </div>
+                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="closeModal2()">Cancelar</button>
+                        <button type="button" class="btn btn-default" onclick="submitForm()">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+          <!-- Contenedor para mostrar el mensaje de respuesta -->
+          <div id="response-message" class="modalEdit" style="display: none;" >
+            <div class="modal-content-edit">
+            <form id="edit-form" method="post">
+                <div class="modal-header">
+                     <h2>Respuesta</h2>
+                    <span class="close" onclick="closeResponseModal()">×</span>
+                </div>
+            </form>
+            </div>
+        </div>
+
+<script>
+        // Función para abrir la ventana modal de confirmación
+        function openConfirmationModal() {
+            var confirmationModalBody = document.getElementById("confirmationModalBody");
+            confirmationModalBody.classList.add("active");
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        // Función para cerrar la ventana modal de confirmación
+        function closeConfirmationModal() {
+            var confirmationModalBody = document.getElementById("confirmationModalBody");
+            confirmationModalBody.classList.remove("active");
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Función para eliminar el registro
+        function deleteRecord() {
+            // Aquí iría tu lógica para eliminar el registro
+            // Por ejemplo:
+            alert("Registro eliminado"); // Esto es solo un ejemplo, reemplázalo con tu lógica real
+            // Después de eliminar el registro, cierra la ventana modal de confirmación
+            closeConfirmationModal();
+        }
+
+        // Función para abrir el modal principal
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        // Función para cerrar el modal principal
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Función para abrir la ventana modal de edición y llenar los campos con los detalles del proveedor
+        function openEditModal(id_usuario, nombre, tipo_Identificacion, numero_identificacion, telefono, email, usuario, contrasenia, tipo_usuario) {
+            document.getElementById("edit_id_usuario").value = id_usuario;
+            document.getElementById("edit_nombre").value = nombre;
+            document.getElementById("edit_tipo_identificacion").value = tipo_Identificacion; // Aquí estaba el error
+            document.getElementById("edit_numero_identificacion").value = numero_identificacion;
+            document.getElementById("edit_telefono").value = telefono;
+            document.getElementById("edit_email").value = email;
+            document.getElementById("edit_usuario").value = usuario;
+            document.getElementById("edit_contrasenia").value = contrasenia;
+            document.getElementById("edit_tipo_usuario").value = tipo_usuario;
+            document.getElementById("myModal2").style.display = "block";
+        }
+
+
+        // Función para cerrar la ventana modal de edición
+        function closeModal2() {
+            document.getElementById("myModal2").style.display = "none";
+        }
+
+         // Función para enviar el formulario utilizando AJAX
+         function submitForm() {
+            var formData = new FormData(document.getElementById("edit-form"));
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Si la respuesta es exitosa, muestra el mensaje de respuesta en el modal de edición
+                        document.querySelector("#myModal2 .modal-body").innerHTML = xhr.responseText;
+                    } else {
+                        // Maneja los errores si es necesario
+                        console.error('Error al enviar el formulario:', xhr.status);
+                    }
+                }
+            };
+            xhr.open("POST", "/editar_proveedor", true);
+            xhr.send(formData);
+        }
+
+        // Función para cerrar el modal de respuesta
+        function closeResponseModal() {
+            document.getElementById("response-message").style.display = "none";
+        }
+</script>
+
+</body>
+</html>

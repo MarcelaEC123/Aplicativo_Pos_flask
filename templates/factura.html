@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <title>Factura de Venta</title>
+</head>
+<style>
+    /* Estilos CSS */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 10px; /* Margen en todos los lados */
+        padding: 0;
+        width: 80mm; /* Ancho del papel */
+    }
+    /* Define los estilos para cada sección de la factura */
+    header, section, footer {
+        padding: 5px;
+    }
+    /* Define los estilos para los elementos de texto */
+    p, h1, h2, h3, table {
+        margin: 0;
+        padding: 0;
+    }
+    h1 {
+        font-size: 14pt;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    h2 {
+        font-size: 12pt;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+    h3 {
+        font-size: 11pt; /* Ajustar el tamaño del total a pagar */
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-weight: bold; /* Hacer el total a pagar en negrita */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    th, td {
+        border: 1px solid #000;
+        padding: 3px;
+    }
+    /* Línea de corte */
+    .corte {
+        border-top: 1px dashed #000;
+        margin-top: 10px; /* Espacio entre la línea de corte y el contenido */
+    }
+    /* Logo en el encabezado */
+    .logo {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .logo img {
+        max-width: 100px; /* Ajusta el tamaño del logo según sea necesario */
+    }
+    /* Estilos para las secciones */
+    .seccion {
+        margin-bottom: 10px;
+        text-align: center; /* Centra el contenido de las secciones */
+    }
+    /* Estilos para las líneas entrecortadas */
+    .linea-entrecortada {
+        border-bottom: 1px dashed #000;
+        margin-bottom: 5px;
+    }
+    /* Otros estilos */
+    footer {
+        text-align: center;
+    }
+</style>
+<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            integrity="sha384-NwF3tBdYF4JcJjU4pN3nI9an2P+iK8a/1qdzNm5/lf7dUq0HfdvpBfB5SvOzJ4tv" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <title>Factura de Venta</title>
+    </head>
+    <style>
+        /* Estilos CSS */
+        /* Tus estilos personalizados aquí */
+    </style>
+    <body>
+        <header>
+            <!-- Encabezado de la factura -->
+            <h1>Factura de Venta</h1>
+            <!-- Información de la compañía -->
+            <div>
+                <h2>SALSAMENTARIA LA MEJOR</h2>
+                <p>NIT: 00000000-0</p>
+                <p>Dirección: Calle 10 SUR # 37B - 32</p>
+                <p>Ciudad: Bogotá</p>
+                <p>Teléfono: 3028635366</p>
+            </div>
+        </header>
+    
+        <section>
+            <!-- Detalle de la venta -->
+            <h2>Detalle de la Venta</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Valor Unitario (COP)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in venta %}
+                    <tr>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>{{ detalle.descripcion }}</td>
+                        <td>{{ detalle.valor_unitario }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    
+        <section>
+            <!-- Totales de la venta -->
+            <h2>Totales</h2>
+            <p>Total a Pagar: COP {{ venta[0].total_a_pagar }}</p>
+        </section>
+    
+        <footer>
+            <!-- Pie de página -->
+            <h2>Gracias por su compra.</h2>
+        </footer>
+    </body>
+    </html>

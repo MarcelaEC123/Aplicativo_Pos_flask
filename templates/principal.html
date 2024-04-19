@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/principal.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Página Inicio</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="/static/images/logo.png" alt="Logo">
+                </div>
+                <br>
+                
+                <div class="user-icon">
+                    <img src="/static/images/usuario-de-perfil.png" alt="User Icon">
+                </div>
+                <div class="admin-name">
+                    <span>Administrador</span>
+                </div>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('principal') }}"><i class="fas fa-home"></i> Inicio</a></li>
+                <br>
+                <li><a href="{{ url_for('caja') }}"><i class="fas fa-cash-register"></i> Caja</a></li>
+                <br>
+                <li><a href="{{ url_for('clientes') }}"><i class="fas fa-users"></i> Clientes</a></li>
+                <br>
+                <li><a href="{{ url_for('proveedores') }}"><i class="fas fa-user-tie"></i> Proveedor</a></li>
+                <br>
+                <li><a href="{{ url_for('productos') }}"><i class="fas fa-box"></i> Productos</a></li>
+                <br>
+                <li><a href="{{ url_for('usuarios') }}"><i class="fas fa-box"></i> Usuarios</a></li>
+            </ul>
+            
+           
+        </div> 
+        <a href="{{ url_for('logout') }}" class="logout-link">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </a>    
+        
+        <div class="content" bg-primary style="background-image: url('../static/images/fondo.jpg');">
+            <div class="DatosEmpresa">
+            <h2>¡¡BIENVENIDO!!</h2>
+            <h3>Salsamentaria la mejor</h3>
+            <h4>Nit 45346256652-1</h4>
+            <h4>Tel 3123456789</h4>
+            
+        </div>
+        </div>
+    </div>
+</body>
+</html>

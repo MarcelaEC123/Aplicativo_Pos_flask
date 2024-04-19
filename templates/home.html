@@ -1,0 +1,48 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <title>Aplicativo POS-HC</title>
+
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+          <img src="../static/images/logo.png" alt="Logo" class="logo">
+          <h1 class="title">Salsamaentaria avicola,productos de panaderia</h1>
+        </div>
+      </header>
+      
+      <main>
+        <h1>Aplicativo POS-HC</h1>
+        <div id="login">
+            <h2>Iniciar sesión</h2>
+            <form action="/login" method="post">
+                <br>
+                <input type="text" class="user-icon" placeholder="Usuario" name="username">
+                <br>
+                <input type="password" class="password-icon" placeholder="Contraseña" name="password">
+                <br>
+                <br>
+                <input type="submit" value="Iniciar sesión">
+                <br>
+                <br>
+                <a href="#" id="forgot-password">Olvidé mi contraseña</a>
+            </form>
+        </div>
+        <!-- Contenedor del mensaje de error -->
+        <div class="popup" id="error-popup" style="display: none;">
+            <span class="close-btn" onclick="cerrarPopup()">Cerrar</span>
+            <p>Credenciales incorrectas</p>
+        </div>
+    </main>
+    <script>
+        function cerrarPopup() {
+            document.getElementById("error-popup").style.display = "none";
+        }
+    </script>
+</body>
+</html>

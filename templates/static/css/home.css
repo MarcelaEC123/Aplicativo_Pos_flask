@@ -1,0 +1,80 @@
+body {
+    padding: 80;
+    background-color: #ecf0f1;
+}
+.header {
+    background-color: #5499C7;
+    padding: 30px 0;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 10px; 
+    margin-top: 0px; 
+  }
+  
+  .header-content {
+    max-width: 1500px; 
+    margin: 0 auto; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    width: 200px; 
+    height: auto;
+  }
+  .header h1 {
+    font-size: 24px; 
+    color: white; 
+    text-align: center; 
+    margin: 0 auto; 
+    text-shadow: none;
+  }
+  
+  
+main {
+    text-align: center;
+}
+
+#login {
+    margin-top:1px; /* Espacio superior entre el header y el formulario de login */
+    text-align: center;
+}
+#forgot-password {
+    margin-top: 10px; /* Espacio superior entre el formulario de login y el link de olvidé mi contraseña */
+    display: block; /* Hace que el link ocupe todo el ancho disponible */
+    text-align: center; /* Centra el texto del enlace */
+}
+
+h1 {
+    font-family: "Arial", sans-serif; /* Cambia la fuente del texto */
+    font-size: 2.5em; /* Tamaño del texto */
+    font-weight: bold; /* Grosor del texto */
+    color: #000; /* Color del texto */
+    text-transform: uppercase; /* Transforma el texto a mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 4px 4px 8px rgba(0,0,0,0.8); /* Sombra del texto */
+    transform: skew(-15deg); /* Inclina el texto en 15 grados */
+}
+.user-icon {
+    padding: 10px 40px 10px 10px; /* Ajusta el espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas */
+    border: 1px solid #ccc; /* Borde */
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #666; /* Color del texto */
+    background-image: url('images/usuario-de-perfil.png'); /* Ruta del icono */
+    background-size: 20px; /* Tamaño del icono */
+    background-position: calc(100% - 5px) center; /* Ajusta la posición del icono */
+    background-repeat: no-repeat; /* Evita la repetición del icono */
+}
+.password-icon{
+    padding: 10px 40px 10px 10px; /* Ajusta el espaciado interno */
+    border-radius: 5px; /* Esquinas redondeadas */
+    border: 1px solid #ccc; /* Borde */
+    background-color: #f8f9fa; /* Color de fondo */
+    color: #666; /* Color del texto */
+    background-image: url('images/cerrar-con-llave.png'); /* Ruta del icono */
+    background-size: 20px; /* Tamaño del icono */
+    background-position: calc(100% - 5px) center; /* Ajusta la posición del icono */
+    background-repeat: no-repeat; /* Evita la repetición del icono */
+}

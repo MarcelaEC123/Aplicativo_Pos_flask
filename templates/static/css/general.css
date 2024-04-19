@@ -1,0 +1,307 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+.sidebar-header .logo img {
+    width: 120%; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto;
+    padding: center;
+    margin-right: 50px;
+    margin-top: -20px;
+}
+.sidebar-header .logo {
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    padding-bottom:-100%; /* Ajusta el espacio inferior según sea necesario */
+}
+
+.sidebar-header .admin-name span {
+    padding: 40px;
+    font-weight: 300; /* Un poco más delgado que el texto normal */
+    text-decoration: underline; /* Subraya el texto */
+    letter-spacing: 2px; /* Agrega espacio entre las letras */
+    margin-top: 10px;
+}
+.user-icon img {
+    width: 50px; /* Ajusta el tamaño del icono */
+    height: auto;
+    margin: top 0px; /* Ajusta la distancia con el logo */
+    display: block; /* Centra el icono horizontalmente */
+    margin-left:34%;
+    margin-right: auto;
+    padding: 5px;
+}
+
+.sidebar {
+    flex: 0 0 100px; /* Ancho fijo de la barra lateral */
+    background-color: #5499C7; /* Azul */
+    color: #ffffff; /* Texto blanco */
+    padding: 40px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 20px 30px; /* Ajusta este valor según sea necesario */
+    margin-top: 20px; /* Ajusta este valor para subir más la lista */
+}
+.sidebar ul li a {
+    color: #ffffff; /* Texto blanco */
+    text-decoration: none;
+    /* font-weight:bold ; Texto en negrita */
+    margin-bottom: 10px;
+}
+.logout-link {
+    position: fixed;
+    bottom: 0; /* Fija el enlace en la parte inferior de la ventana del navegador */
+    left:  0; /* Fija el enlace en la esquina derecha de la ventana del navegador */
+    padding: 10px 9%; /* Ajusta el espaciado interno según sea necesario */
+    color: #ffffff; /* Color de texto blanco */
+    margin-bottom: 20px; /* Ajusta la distancia con los elementos anteriores */
+}
+
+.content {
+    flex: 1; /*Ocupa todo el espacio restante */
+    background-color: rgba(255, 255, 255, 0.7); /* Fondo transparente */
+    padding: 10px; /* Ajusta el espaciado interno según sea necesario */
+    margin-top: 0%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;   
+    font-size: 20px; 
+    color: #4b535a;
+}
+
+/* Imagen a la derecha como línea de agua */
+.wrapper {
+    display: flex;
+    height: 100vh;
+    background-size: 700px; /* Define el tamaño de la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: calc(100% - 25%) calc(100% - 50%); /* Ajusta la posición de la imagen */
+}
+
+
+/* Imagen a la derecha como línea de agua */
+.watermark {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.3; /* Opacidad baja */
+}
+
+
+.horizontal-bar {
+    background-color: #d8e4f0;
+    height: 40px;
+    width: 100%; /* Esto asegura que la barra abarque todo el ancho */
+    
+}   
+
+.horizontal-bar img {
+    width: 22px; /* Establece el ancho deseado */
+    height: 22px; /* Establece la altura deseada */
+    margin-right: 2%; 
+}
+
+.horizontal-bar button {
+    width: 20%; 
+    height: auto; /* Altura automática para adaptarse al contenido */
+    min-width: 100px; /* Ancho mínimo para asegurar que el texto sea visible */
+    background-color: rgb(49, 48, 54); 
+    color: white; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    padding: 5px 10px; /* Ajuste del relleno */
+}
+
+.modal-header {
+    background-color: #5499C7;
+    color: #fff;
+    padding: 1%;
+}
+/* Estilo para todas las cajas de la clase form-group */
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;    
+}
+
+.label {
+    margin-right: 80px;
+}
+
+/* Simplificación de los estilos para las cajas de texto */
+input[type="text"] {
+    display: block;
+    display: flex;
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;    
+    flex-direction: column;
+    height:30px;
+}
+
+#search-input {
+    width: 20% ;
+    height: 25px;
+    padding: 5px;
+    margin-right: 10px;
+    border: 2px solid #000000; /* Color del borde azul */
+}
+
+.caja1{
+    padding: 2%;
+    padding-right: 8%;
+}
+
+.modal-body{
+    display: flex;
+    padding: 25px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Estilos para la ventana modal */
+.modal, .modal2 {
+
+    display: none;
+    padding-top: 5%;
+    font-family: serif;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.modal-content, .modal2-content {
+    background-color: #fdf6f6;
+    margin: 1% auto;
+    padding-bottom: 20px;
+    border: 1px solid #cfcbcb;
+    width: 60%;
+    max-width: 900px;
+}
+
+.close {
+    color: #fcf8f8;
+    float: right;
+    padding-right: 2%;
+    padding-top: 2%;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-default {
+    width: 20%; /* Ancho de cada botón */
+    height: 40px; /* Altura del botón */
+    background-color: rgb(49, 48, 54); /* Fondo negro */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    margin: 0 120px; 
+    justify-content: space-between 1%;
+}
+
+
+.modalEliminacion{
+    display: block;
+    justify-content: right;
+    padding-top: 13%;   
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.btn-si {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+    background-color: #302d2c;
+    color: white;
+    border: none;
+    padding: 6px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 70px;
+    cursor: pointer;
+}
+
+.btn-no {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+    background-color: #302d2c;
+    color: white;
+    border: none;
+    padding: 6px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 70px;
+    cursor: pointer;
+}
+
+.modal-eliminacion{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+}
+
+.modal-header-eliminacion{
+    background-color: #2981e0;
+    color: #fff;
+    padding: 1%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 80%;
+}
+
+th{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 90%;
+    text-align: center;
+}
+
+td{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 60%;
+}
+
+.mensaje-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}

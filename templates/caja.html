@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha384-NwF3tBdYF4JcJjU4pN3nI9an2P+iK8a/1qdzNm5/lf7dUq0HfdvpBfB5SvOzJ4tv" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Página con Menú</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="/static/images/logo.png" alt="Logo">
+                </div>
+                <br>
+
+                <div class="user-icon">
+                    <img src="/static/images/usuario-de-perfil.png" alt="User Icon">
+                </div>
+                <div class="admin-name">
+                    <span>Administrador</span>
+                </div>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('principal') }}"><i class="fas fa-home"></i> Inicio</a></li>
+                <br>
+                <li><a href="{{ url_for('caja') }}"><i class="fas fa-cash-register"></i> Caja</a></li>
+                <br>
+                <li><a href="{{ url_for('clientes') }}"><i class="fas fa-users"></i> Clientes</a></li>
+                <br>
+                <li><a href="{{ url_for('proveedores') }}"><i class="fas fa-user-tie"></i> Proveedor</a></li>
+                <br>
+                <li><a href="{{ url_for('productos') }}"><i class="fas fa-box"></i> Productos</a></li>
+                <br>
+                <li><a href="{{ url_for('usuarios') }}"><i class="fas fa-box"></i> Usuarios</a></li>
+            </ul>
+        </div>
+        <a href="{{ url_for('logout') }}" class="logout-link">
+            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+        </a>
+
+        <div class="content d-flex flex-column ">
+            <h3>Registro de Caja</h3>
+            <div class="horizontal-bar my-4 d-flex py-1 justify-content-end ">
+                <button type="button" class="btn btn-danger btn-primary" onclick="openAgregarVentaModal()">Crear Venta</button>
+                <input type="text" id="search-input" placeholder="Buscar...">
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <th scope="col">Id_venta</th>
+                    <th scope="col">Id_Factura</th>
+                    <th scope="col">Id_cliente</th>
+                    <th scope="col">Observaciones</th>
+                    <th scope="col">Medio_Pago</th>
+                    <th scope="col">Descuento</th>
+                    <th scope="col">Iva</th>
+                    <th scope="col">Fecha_Registro</th>
+                    <th scope="col">Total_a_pagar</th>
+                    <th scope="col">Acciones</th>
+                </thead>
+                <tbody>
+                    {% for d in data %}
+                    <tr>
+                        <td>{{ d.id_venta }}</td>
+                        <td>{{ d.id_factura }}</td>
+                        <td>{{ d.id_cliente}}</td>
+                        <td>{{ d.observaciones }}</td>
+                        <td>{{ d.medio_pago }}</td>
+                        <td>{{ d.descuento }}</td>
+                        <td>{{ d.iva }}</td>
+                        <td>{{ d.fecha_registro }}</td>
+                        <td>{{ d.total_a_pagar }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm detalle-btn" data-id="{{ d.id_venta }}" onclick="redirectToDetalle('{{ d.id_venta }}')">Detalles</button>
+
+
+                            <a href="{{ url_for('deleteVenta', id_venta=d.id_venta) }}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <a href="{{ url_for('generar_ticket', id_venta=d.id_venta) }}" class="btn btn-primary btn-sm">Ticket</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Ventana modal agregar venta -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <form action="/guardarVenta" id="venta_form" method="post">
+                    <div class="modal-header">
+                        <h2>Registrar Venta</h2>
+                        <span class="close" onclick="closeModal()">×</span>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Contenido del formulario de venta -->
+                        <div class="caja1">
+                            <div class="form-group">
+                                <label for="id_venta">ID Venta:</label>
+                                <input type="text" id="id_venta" name="id_venta">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_factura">ID Factura:</label>
+                                <input type="text" id="id_factura" name="id_factura">
+                            </div>
+                            <div class="form-group">
+                                <label for="cliente_id_cliente">ID Cliente:</label>
+                                <input type="text" id="cliente_id_cliente" name="cliente_id_cliente">
+                            </div>
+                            <div class="form-group">
+                                <label for="observaciones">Observaciones:</label>
+                                <input type="text" id="observaciones" name="observaciones">
+                            </div>
+                            <div class="form-group">
+                                <label for="medio_pago">Medio de pago: </label>
+                                <select id="medio_pago" name="medio_pago">
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Nequi">Nequi</option>
+                                    <option value="Daviplata">Daviplata</option>
+                                    <option value="Tarjeta">Tarjeta</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="descuento">Descuento:</label>
+                                <input type="text" id="descuento" name="descuento">
+                            </div>
+                        </div>
+
+                        <div class="caja1">
+                            <div class="form-group">
+                                <label for="iva">Iva:</label>
+                                <input type="text" id="iva" name="iva">
+                            </div>
+                            <div class="form-group">
+                                <label for="fecha_registro">Fecha de Registro:</label>
+                                <input type="text" id="fecha_registro" name="fecha_registro">
+                            </div>
+                            <div class="form-group">
+                                <label for="total_a_pagar">Total a pagar:</label>
+                                <input type="text" id="total_a_pagar" name="total_a_pagar">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="closeModal()">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Función para abrir la ventana modal de agregar venta
+        function openAgregarVentaModal() {
+            document.getElementById("myModal").style.display = "block";
+            // Asignar la fecha y hora actual al campo fecha_registro
+            asignarFechaRegistro();
+        }
+
+        // Función para cerrar la ventana modal de agregar venta
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Función para obtener la fecha y hora actual y asignarla al campo fecha_registro
+        function asignarFechaRegistro() {
+            // Obtener la fecha y hora actual
+            var now = new Date();
+            // Formatear la fecha y hora en el formato deseado (24 horas)
+            var formattedDate = now.getFullYear() + '-' + (now.getMonth() + 1).toString().padStart(2, '0') + '-' + now.getDate().toString().padStart(2, '0') + ' ' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+            // Asignar la fecha y hora al campo fecha_registro
+            document.getElementById("fecha_registro").value = formattedDate;
+        }
+  // Función para redirigir al detalle de la venta
+  function redirectToDetalle(idVenta) {
+        // Redirigir a la página de detalle con el ID de la venta como parámetro
+        window.location.href = '/detalle_venta.html?id=' + idVenta;
+    }
+    </script>
+</body>
+
+</html>

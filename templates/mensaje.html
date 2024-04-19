@@ -1,0 +1,52 @@
+<!-- mensaje.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        /* Estilos para el mensaje de error */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .popup p {
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup" id="error-popup">
+        <span class="close-btn" onclick="cerrarPopup()">Cerrar</span>
+        <p>Credenciales incorrectas</p>
+    </div>
+
+    <script>
+        function cerrarPopup() {
+            // Oculta el mensaje de error
+            document.getElementById("error-popup").style.display = "none";
+            // Redirige a la página de inicio
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>

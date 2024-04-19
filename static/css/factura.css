@@ -1,0 +1,68 @@
+/* Estilos CSS */
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px; /* Margen en todos los lados */
+    padding: 0;
+    width: 80mm; /* Ancho del papel */
+}
+/* Define los estilos para cada sección de la factura */
+header, section, footer {
+    padding: 5px;
+}
+/* Define los estilos para los elementos de texto */
+p, h1, h2, h3, table {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 14pt;
+    text-align: center;
+    margin-bottom: 10px;
+}
+h2 {
+    font-size: 12pt;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+h3 {
+    font-size: 11pt; /* Ajustar el tamaño del total a pagar */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold; /* Hacer el total a pagar en negrita */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+th, td {
+    border: 1px solid #000;
+    padding: 3px;
+}
+/* Línea de corte */
+.corte {
+    border-top: 1px dashed #000;
+    margin-top: 10px; /* Espacio entre la línea de corte y el contenido */
+}
+/* Logo en el encabezado */
+.logo {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.logo img {
+    max-width: 100px; /* Ajusta el tamaño del logo según sea necesario */
+}
+/* Estilos para las secciones */
+.seccion {
+    margin-bottom: 10px;
+    text-align: center; /* Centra el contenido de las secciones */
+}
+/* Estilos para las líneas entrecortadas */
+.linea-entrecortada {
+    border-bottom: 1px dashed #000;
+    margin-bottom: 5px;
+}
+/* Otros estilos */
+footer {
+    text-align: center;
+}

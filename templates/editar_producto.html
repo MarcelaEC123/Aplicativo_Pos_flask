@@ -1,0 +1,67 @@
+<!-- editar_producto.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <title>Editar Productos</title>
+</head>
+<body>
+    <!-- Ventana modal editar productos -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">×</span>
+            <form action="/editar_producto/{{ producto.id_producto }}" method="post">
+                <div class="modal-header">
+                    <h2>Editar Producto</h2>  
+                </div>
+                <div class="modal-body">
+                    <div class="caja1">
+                        <div class="form-group">
+                                <label for="id_producto">Id Producto: </label>
+                            <input type="text" id="id_producto" name="id_producto" value="{{ producto.id_producto }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="codigo">Codigo: </label>
+                            <input type="text" id="codigo" name="codigo">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion: </label>
+                            <input type="text" id="descripcion" name="descripcion" value="{{ producto.descripcion }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor_unitario">Categoria: </label>
+                            <input type="text" id="categoria" name="categoria" value="{{ producto.categoria }}">
+                        </div>
+                        
+                    </div>
+                    <div class="caja1">
+                        <div class="form-group">
+                            <label for="valor_unitario">Proveedor </label>
+                            <input type="text" id="proveedor" name="proveedor" value="{{ producto.proveedor }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="medio_pago">Valor unitario:</label>
+                            <input type="text" id="valorUnitario" name="valor_unitario" value="{{ producto.valor_unitario }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="medio_pago">Unidad de medida: </label>
+                            <input type="text" id="unidadMedida" name="unidad_medida" value="{{ producto.unidad_medida }}">
+                        </div>
+                
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-default">Guardar cambios</button>
+                </div>
+                <!-- Dentro del formulario -->
+                <div class="modal-body">
+                    {{ producto }}
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
