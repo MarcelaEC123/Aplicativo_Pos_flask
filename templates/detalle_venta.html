@@ -109,7 +109,7 @@
             <input type="number" id="producto-valor-unitario" name="valor_unitario" min="0">
             <input type="hidden" id="id_venta" name="id_venta" value="1"> <!-- Este valor puede cambiar según tu lógica -->
             <input type="hidden" id="id_producto" name="id_producto" value="1"> <!-- Este valor puede cambiar según tu lógica -->
-            <button type="submit">Agregar Producto</button>
+            <button type="button" onclick="agregarProducto()">Agregar Producto</button>
         </form>
         <div class="productos" id="productos"></div>
     </div>
@@ -165,11 +165,10 @@
 
         // Función para agregar un producto al arreglo de productos y mostrarlos en la página
         function agregarProducto() {
-            var cantidad = document.getElementById('producto-codigo').value;
-            var descripcion = document.getElementById('producto-descripcion').value;
             var cantidad = document.getElementById('producto-cantidad').value;
+            var descripcion = document.getElementById('producto-descripcion').value;
             var valorUnitario = document.getElementById('producto-valor-unitario').value;
-            var codigo = obtenerCodigoProducto(); // Aquí deberías obtener el código del producto
+            var codigo = document.getElementById('producto-codigo').value; // Aquí deberías obtener el código del producto
 
             if (cantidad && descripcion && valorUnitario && codigo) {
                 var producto = {
@@ -186,13 +185,6 @@
             } else {
                 alert('Por favor complete todos los campos del producto.');
             }
-        }
-
-        // Función para obtener el código del producto
-        function obtenerCodigoProducto() {
-            // Aquí debes implementar la lógica para obtener el código del producto
-            // Por ejemplo:
-            return document.getElementById('producto-codigo').value;
         }
 
         // Función para mostrar los productos en la página

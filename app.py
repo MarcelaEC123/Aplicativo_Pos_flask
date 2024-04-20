@@ -5,7 +5,7 @@ from flask import Flask, request, render_template, redirect, url_for
 
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
 
 @app.route("/")
 def index():
@@ -189,7 +189,10 @@ def detalle_venta():
     return render_template('detalle_venta.html', venta=venta)
 # Definir el endpoint para guardar los detalles de la venta
 
-
+@app.route('/guardar_detalles_venta', methods=['POST'])
+def guardar_detalles_venta():
+    # Aquí manejas la lógica para guardar los detalles de la venta
+    return 'Detalles de la venta guardados correctamente'
 
 @app.route("/clientes")
 def clientes():
