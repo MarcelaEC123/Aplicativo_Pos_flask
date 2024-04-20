@@ -2,6 +2,8 @@ import MySQLdb
 from flask import Flask, request, render_template, redirect, url_for
 
  # Importa el modelo de Venta definido en tu aplicación
+#prueba cindy
+
 
 import database as db
 
