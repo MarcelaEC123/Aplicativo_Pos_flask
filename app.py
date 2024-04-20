@@ -1,5 +1,5 @@
 import MySQLdb
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 
  # Importa el modelo de Venta definido en tu aplicación1111111111111111111111111111111111111111111111
 #prueba cindy
@@ -194,6 +194,25 @@ def detalle_venta():
 def guardar_detalles_venta():
     # Aquí manejas la lógica para guardar los detalles de la venta
     return 'Detalles de la venta guardados correctamente'
+
+def obtener_informacion_desde_bd(codigo_producto):
+    try:
+        db_connection, cursor = db.conectar_bd()
+        if db_connection is None or cursor is None:
+            return None
+
+        sql = "SELECT descripcion, valor_unitario FROM producto WHERE codigo = %s"
+        print("Consulta SQL:", sql)  # Imprimir la consulta SQL para depuración
+        cursor.execute(sql, (codigo_producto,))
+        producto_data = cursor.fetchone()
+        cursor.close()
+        db_connection.close()
+
+        print("Datos del producto obtenidos:", producto_data)  # Imprimir los datos obtenidos para depuración
+        return producto_data
+    except MySQLdb.MySQLError.connector.Error as error:
+        print("Error al obtener información del producto desde la base de datos:", error)
+        return None
 
 @app.route("/clientes")
 def clientes():

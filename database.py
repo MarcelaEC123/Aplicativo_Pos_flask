@@ -67,3 +67,22 @@ def guardar_detalles_venta(codigo, descripcion, cantidad, valor_unitario, id_ven
     except mysql.connector.Error as error:
         print("Error al guardar detalles de venta:", error)
         return False
+    
+def obtener_informacion_desde_bd(codigo_producto):
+    try:
+        db_connection, cursor = conectar_bd()
+        if db_connection is None or cursor is None:
+            return None
+
+        sql = "SELECT descripcion, valor_unitario FROM producto WHERE codigo = %s"
+        print("Consulta SQL:", sql)  # Imprimir la consulta SQL para depuración
+        cursor.execute(sql, (codigo_producto,))
+        producto_data = cursor.fetchone()
+        cursor.close()
+        db_connection.close()
+
+        print("Datos del producto obtenidos:", producto_data)  # Imprimir los datos obtenidos para depuración
+        return producto_data
+    except mysql.connector.Error as error:
+        print("Error al obtener información del producto desde la base de datos:", error)
+        return None
