@@ -1,10 +1,9 @@
 import MySQLdb
 from flask import Flask, request, render_template, redirect, url_for
 
- # Importa el modelo de Venta definido en tu aplicación
+ # Importa el modelo de Venta definido en tu aplicación1111111111111111111111111111111111111111111111
 #prueba cindy
-
-
+#11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 import database as db
 
 app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
