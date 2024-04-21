@@ -81,8 +81,6 @@
                         <td>{{ d.total_a_pagar }}</td>
                         <td>
                             <button type="button" class="btn btn-success btn-sm detalle-btn" data-id="{{ d.id_venta }}" onclick="redirectToDetalle('{{ d.id_venta }}')">Detalles</button>
-
-
                             <a href="{{ url_for('deleteVenta', id_venta=d.id_venta) }}" class="btn btn-danger btn-sm">Eliminar</a>
                             <a href="{{ url_for('generar_ticket', id_venta=d.id_venta) }}" class="btn btn-primary btn-sm">Ticket</a>
                         </td>
@@ -185,7 +183,8 @@
   // Función para redirigir al detalle de la venta
   function redirectToDetalle(idVenta) {
         // Redirigir a la página de detalle con el ID de la venta como parámetro
-        window.location.href = '/detalle_venta.html?id=' + idVenta;
+      //  window.location.href = '/detalle_venta.html?id=' + idVenta;
+      window.location.href = '/detalle_venta.html/' + idVenta;
     }
     </script>
 </body>

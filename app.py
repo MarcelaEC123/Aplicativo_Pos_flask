@@ -170,7 +170,8 @@ def generar_ticket(id_venta):
     except Exception as e:
         return f"Error al generar el ticket: {str(e)}"
 
-def obtener_venta():
+#FUNCION PARA MOSTRART DETALLES DE VENTA
+def obtener_venta(id_venta):
     # Aquí iría tu lógica para obtener los detalles de la venta
     # Por ahora, simplemente devolveré un diccionario ficticio con datos de ejemplo
     return {
@@ -184,11 +185,14 @@ def obtener_venta():
         'id_cliente': 123
     }
 
-@app.route('/detalle_venta.html')
-def detalle_venta():
-    venta = obtener_venta()  # Reemplaza esto con tu lógica para obtener los detalles de la venta
+@app.route('/detalle_venta.html/<id_venta>')
+def detalle_venta(id_venta):
+    venta = obtener_venta() 
+     # Reemplaza esto con tu lógica para obtener los detalles de la venta
     return render_template('detalle_venta.html', venta=venta)
 # Definir el endpoint para guardar los detalles de la venta
+
+
 
 @app.route('/guardar_detalles_venta', methods=['POST'])
 def guardar_detalles_venta():
@@ -490,6 +494,22 @@ def editar_producto():
                 return 'Producto no encontrado', 404
         else:
             return 'Todos los campos son obligatorios', 400
+
+# API PRODUCTOS
+@app.route('/users/<id_producto>', methods=['GET'])
+def get_user (id_producto):
+    try:   
+        db_connection, cursor = db.conectar_bd()
+        sql = "SELECT id_producto, codigo, descripcion, valor_unitario FROM producto WHERE id_producto ='{0}'".format(id_producto)
+        cursor.execute(sql)
+        datos = cursor.fetchone()
+        if datos !=None:
+            producto = {'id_producto':datos[0],'codigo':datos[1], 'descripcion': datos[2], 'valor_unitario': datos[3] }
+            return jsonify({'producto':producto, 'mensaje': "producto no encontrado"})
+        else:
+            return jsonify({'mensaje': "No se encontrado"})
+    except Exception as ex:
+         return jsonify({'mensaje': "Error"})
 
 
 # Ruta para mostrar usuarios

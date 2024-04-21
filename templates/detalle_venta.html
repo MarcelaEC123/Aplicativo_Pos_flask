@@ -101,7 +101,7 @@
         <form id="productos-form" action="/guardar_detalles_venta" method="post">
             <label for="producto-codigo">Codigo:</label>
             <input type="number" id="producto-codigo" name="codigo" min="1">
-            <button type="button" onclick="obtenerInformacionProducto()">Obtener Información Producto</button>
+            <button type="button" onclick="obtenerInformacionProducto1()">Obtener Información Producto</button>
             <label for="producto-descripcion">Descripción:</label>
             <input type="text" id="producto-descripcion" name="descripcion">
             <label for="producto-cantidad">Cantidad:</label>
@@ -116,8 +116,9 @@
     </div>
 
     <script>
+
         // Obtener la venta desde el backend
-        var venta = JSON.parse('{{ venta | tojson | safe }}');
+        var venta = JSON.parse('{{ venta | tojson }}');
 
         // Función para mostrar los detalles de la venta
         function mostrarDetalleVenta() {
@@ -155,6 +156,7 @@
                         <th>ID Cliente</th>
                         <td>${venta.id_cliente}</td>
                     </tr>
+                             
                 </table>
             `;
 
@@ -246,32 +248,24 @@
         window.onload = function () {
             mostrarDetalleVenta();
         };
-        function obtenerInformacionProducto() {
-    var codigoProducto = document.getElementById('producto-codigo').value;
 
-    // Realizar una solicitud al servidor para obtener la información del producto
-    fetch('/obtener_informacion_producto?codigo=' + codigoProducto)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al obtener información del producto');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Verificar si se recibieron datos válidos del servidor
-            if (data && data.descripcion && data.valor_unitario) {
-                // Actualizar los campos de descripción y valor unitario en el formulario
-                document.getElementById('producto-descripcion').value = data.descripcion;
-                document.getElementById('producto-valor-unitario').value = data.valor_unitario;
-            } else {
-                throw new Error('Datos de producto no válidos recibidos del servidor');
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Error: No se pudo obtener la información del producto.');
-        });
-}
+        function obtenerInformacionProducto1() {
+        var codigoProducto = document.getElementById('producto-codigo').value;
+            
+
+        
+        fetch('http://127.0.0.1:5000/users/' + codigoProducto)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                document.getElementById('producto-descripcion').value = data.producto.descripcion;
+                document.getElementById('producto-valor-unitario').value = data.producto.valor_unitario;
+            })
+            .catch (error=>alert('Producto no encontrado'))
+        }   
+
+
+
     </script>
 </body>
 
