@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for
 #11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
 
 @app.route("/")
 def index():
@@ -282,7 +282,7 @@ def deleteCliente (id_cliente):
 def proveedores():
     db_connection, cursor = db.conectar_bd()
     
-       # Obtener el próximo valor autoincremental de id_producto
+       # Obtener el próximo valor autoincremental de id_proVEEDOR
     cursor.execute("SHOW TABLE STATUS LIKE 'proveedor'")
     table_status = cursor.fetchone()
     next_id = table_status[10]  # El índice 10 corresponde a la columna Auto_increment
@@ -345,8 +345,6 @@ def deleteProveedor (id_proveedor):
 
 @app.route('/editar_proveedor', methods=['POST'])
 def editar_proveedor():
-    # Tu lógica para editar el proveedor aquí
-
     if request.method == 'POST':
         id_proveedor = request.form['id_proveedor']
         tipo_identificacion = request.form['tipo_identificacion']
@@ -360,12 +358,14 @@ def editar_proveedor():
 
         if id_proveedor and tipo_identificacion and numero_identificacion and nombre_proveedor and email and direccion and telefono and dia_de_visita and dia_de_entrega:
             if db.actualizar_proveedor(id_proveedor, tipo_identificacion, numero_identificacion, nombre_proveedor, email, direccion, telefono, dia_de_visita, dia_de_entrega):
-                return 'Proveedor editado exitosamente'
+                # Devuelve un mensaje de éxito
+                return jsonify({'message': 'Proveedor editado exitosamente'})
             else:
-                return 'Proveedor no encontrado'
+                # Devuelve un mensaje de error
+                return jsonify({'message': 'Proveedor no encontrado'})
         else:
-            return 'Todos los campos son obligatorios'
-
+            # Devuelve un mensaje de error si algún campo está vacío
+            return jsonify({'message': 'Todos los campos son obligatorios'})
 
 
 #Ruta para guardar PRODUCTOS
@@ -373,7 +373,7 @@ def editar_proveedor():
 def productos():
     db_connection, cursor = db.conectar_bd()
     
-    # Obtener el próximo valor autoincremental de id_producto
+       # Obtener el próximo valor autoincremental de id_proVEEDOR
     cursor.execute("SHOW TABLE STATUS LIKE 'producto'")
     table_status = cursor.fetchone()
     next_id = table_status[10]  # El índice 10 corresponde a la columna Auto_increment
@@ -388,23 +388,29 @@ def productos():
         cursor.execute("SELECT MAX(id_producto) FROM producto")
         last_id = cursor.fetchone()[0]
         next_id = last_id + 1
-    # Generar el nuevo código
+
+    # Obtener el último código
     cursor.execute("SELECT MAX(codigo) FROM producto")
     last_code = cursor.fetchone()[0]
     if last_code:
-        new_code = str(int(last_code) + 1).zfill(4)  # Incrementar el último código y rellenar con ceros
+        new_code = str(int(last_code) + 1).zfill(5)  # Incrementar el último código y rellenar con ceros
     else:
-        new_code = "0001"  # Si no hay códigos en la base de datos, iniciar desde "0001"
+        new_code = "00001"  # Si no hay códigos en la base de datos, iniciar desde "00001"
+
     # Obtener los productos existentes
     cursor.execute("SELECT * FROM producto")
     myresult = cursor.fetchall()
+
     # Convertir datos a diccionario
     insertObjec = []
     columnNames = [column[0] for column in cursor.description]
     for record in myresult:
         insertObjec.append(dict(zip(columnNames, record)))
+
     cursor.close()
     return render_template("productos.html", data=insertObjec, next_id=next_id, new_code=new_code)
+
+
 
 # Ruta para guardar productos
 @app.route('/guardar', methods=['POST'])
@@ -472,14 +478,13 @@ def editar_producto():
         codigo = request.form['codigo']
         descripcion = request.form['descripcion']
         categoria = request.form['categoria']
-        id_proveedor = request.form['id_proveedor']
         nombre_proveedor = request.form['nombre_proveedor']
         valor_unitario = request.form['valor_unitario']
         unidad_medida = request.form['unidad_medida']
         stock = request.form['stock']
 
-        if id_producto and codigo and descripcion and categoria and id_proveedor and nombre_proveedor and valor_unitario and unidad_medida and stock:
-            if db.actualizar_producto(id_producto, codigo, descripcion, categoria, id_proveedor, nombre_proveedor, valor_unitario, unidad_medida, stock):
+        if id_producto and codigo and descripcion and categoria and nombre_proveedor and valor_unitario and unidad_medida and stock:
+            if db.actualizar_producto(id_producto, codigo, descripcion, categoria, nombre_proveedor, valor_unitario, unidad_medida, stock):
                 return 'Producto editado exitosamente', 200
             else:
                 return 'Producto no encontrado', 404

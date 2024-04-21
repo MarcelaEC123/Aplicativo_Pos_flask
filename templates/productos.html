@@ -150,7 +150,7 @@
                     <th scope="col">Codigo</th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Categoria</th>
-                    <th scope="col">nombre_proveedor</th>
+                    <th scope="col">Nombre proveedor</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Unidad_medida</th>
                     <th scope="col">Valor_unitario</th>
@@ -256,17 +256,13 @@
                                         <option value="Licores">Licores</option>
                                         <option value="Vencidos">Vencidos</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edit_id_proveedor">Id Proveedor </label>
-                                    <input type="text" id="edit_id_proveedor" name="edit_id_proveedor">
-                                </div>
-                            </div>
-                            <div class="caja1">
+                                </div>                     
                                 <div class="form-group">
                                     <label for="edit_nombre_proveedor">Nombre Proveedor </label>
                                     <input type="text" id="edit_nombre_proveedor" name="edit_nombre_proveedor">
                                 </div>
+                            </div>
+                                <div class="caja1">
                                 <div class="form-group">
                                     <label for="edit_valor_unitario">Valor unitario:</label>
                                     <input type="text" id="edit_valor_unitario" name="edit_valor_unitario">
@@ -331,12 +327,11 @@
         document.getElementById("myModal").style.display = "none";
     }
      // Función para abrir la ventana modal de edición
-     function openEditModal(id_producto, codigo, descripcion, categoria, id_proveedor, nombre_proveedor, valor_unitario, unidad_medida, stock) {
+     function openEditModal(id_producto, codigo, descripcion, categoria, nombre_proveedor, valor_unitario, unidad_medida, stock) {
             document.getElementById("edit_id_producto").value = id_producto;
             document.getElementById("edit_codigo").value = codigo;
             document.getElementById("edit_descripcion").value = descripcion;
             document.getElementById("edit_categoria").value = categoria;
-            document.getElementById("edit_id_proveedor").value = id_proveedor;
             document.getElementById("edit_nombre_proveedor").value = nombre_proveedor;
             document.getElementById("edit_valor_unitario").value = valor_unitario;
             document.getElementById("edit_unidad_medida").value = unidad_medida;

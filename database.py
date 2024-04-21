@@ -8,7 +8,7 @@ def conectar_bd():
         database = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="",  # Coloca tu contraseña si la tienes configurada
+            password="SQLMARCE2022.",  # Coloca tu contraseña si la tienes configurada
             database="Aplicativo_pos_final"
         )
         # Devolver la conexión y un cursor

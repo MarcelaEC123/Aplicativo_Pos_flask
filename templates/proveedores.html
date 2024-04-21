@@ -289,29 +289,41 @@
             document.getElementById("myModal2").style.display = "none";
         }
 
-        // Función para enviar el formulario utilizando AJAX
-        function submitForm() {
-            var formData = new FormData(document.getElementById("edit-form"));
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // Si la respuesta es exitosa, muestra el mensaje de respuesta en el modal de edición
-                        document.querySelector("#myModal2 .modal-body").innerHTML = xhr.responseText;
-                    } else {
-                        // Maneja los errores si es necesario
-                        console.error('Error al enviar el formulario:', xhr.status);
-                    }
-                }
-            };
-            xhr.open("POST", "/editar_proveedor", true);
-            xhr.send(formData);
+  
+    // Función para enviar el formulario utilizando AJAX
+function submitForm() {
+    var formData = new FormData(document.getElementById("edit-form"));
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                // Si la respuesta es exitosa, muestra el mensaje de respuesta en el modal de edición
+                displayResponse(xhr.responseText);
+                // Cierra la ventana modal de edición después de recibir la respuesta
+                closeModal2();
+            } else {
+                // Maneja los errores si es necesario
+                console.error('Error al enviar el formulario:', xhr.status);
+            }
         }
+    };
+    xhr.open("POST", "/editar_proveedor", true);
+    xhr.send(formData);
+}
 
-        // Función para cerrar el modal de respuesta
-        function closeResponseModal() {
-            document.getElementById("response-message").style.display = "none";
-        }
+
+    // Función para mostrar la respuesta en el modal de edición
+    function displayResponse(response) {
+        document.getElementById("response-message").style.display = "block";
+        document.querySelector("#response-message .modal-content-edit").innerHTML = response;
+    }
+
+    // Función para cerrar el modal de respuesta
+    function closeResponseModal() {
+        document.getElementById("response-message").style.display = "none";
+    }
+
+ 
     </script>
 </body>
 </html>
