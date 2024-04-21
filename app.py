@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for
 #11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
 
 @app.route("/")
 def index():
@@ -16,11 +16,12 @@ def index():
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
+    rol = request.form.get("rol")
 
     try:
         db_connection, cursor = db.conectar_bd()
-        query = "SELECT * FROM usuario WHERE Usuario = %s AND Contrasenia = %s"
-        cursor.execute(query, (username, password))
+        query = "SELECT * FROM usuario WHERE Usuario = %s AND Contrasenia = %s AND rol = %s "
+        cursor.execute(query, (username, password,rol))
         user = cursor.fetchone()
         cursor.close()
         db_connection.close()

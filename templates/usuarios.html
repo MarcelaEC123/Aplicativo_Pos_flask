@@ -56,15 +56,13 @@
                 
                     <table class="table table-bordered">
                         <thead>
-                            <th scope="col">Id_usuario</th>
+                            <th scope="col">Id Usuario</th>
                             <th scope="col">Nombre</th> 
-                            <th scope="col">Tipo_Identificacion</th>
-                            <th scope="col">Numero_identificacion</th> 
-                            <th scope="col">Telefono</th> 
-                            <th scope="col">Email</th> 
+                            <th scope="col">Tipo Identificacion</th>
+                            <th scope="col">Numero Identificacion</th> 
                             <th scope="col">Usuario</th> 
-                            <th scope="col">Contrasenia</th>
-                            <th scope="col">Tipo_usuario</th>
+                            <th scope="col">Contraseña</th>
+                            <th scope="col">Rol</th>
                             <th scope="col" colspan="2">Acciones</th> 
                         </thead>
                     
@@ -75,11 +73,9 @@
                                 <td>{{d.nombre}}</td>
                                 <td>{{d.tipo_identificacion}}</td>
                                 <td>{{d.numero_identificacion}}</td>
-                                <td>{{d.telefono}}</td>
-                                <td>{{d.email}}</td>
                                 <td>{{d.usuario}}</td>
                                 <td>************</td>
-                                <td>{{d.tipo_usuario}}</td>
+                                <td>{{d.rol}}</td>
                                 <td><a href="{{url_for('deleteUsuarios', id_usuario=d.id_usuario)}}" class="btn btn-danger btn-sm">Eliminar</a></td>
                                 <td>
                                     <button class="btn btn-primary btn-sm" onclick="openEditModal('{{d.id_usuario}}', '{{d.nombre}}','{{d.tipo_identificacion}}', '{{d.numero_identificacion}}', '{{d.telefono}}', '{{d.email}}', '{{d.usuario}}', '{{d.contrasenia}}', '{{d.tipo_usuario}}')">Editar</button>
@@ -120,16 +116,6 @@
                     <div class="form-group">
                         <label for="numero_identificacion">numero_identificacion:</label>
                         <input type="text" id="numero_identificacion" name="numero_identificacion">
-                    </div>
-                    <div class="form-group">
-                        <label for="telefono">telefono:</label>
-                        <input type="text" id="telefono" name="telefono">
-                    </div>
-                </div>
-                <div class="caja1">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" id="email" name="email">
                     </div>
                     <div class="form-group">
                         <label for="usuario">usuario:</label>
