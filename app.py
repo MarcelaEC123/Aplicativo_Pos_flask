@@ -282,6 +282,29 @@ def deleteCliente (id_cliente):
         db_connection.close()
         return redirect(url_for('clientes'))
 
+@app.route('/editar_cliente', methods=['POST'])
+def editar_cliente():
+    if request.method == 'POST':
+        id_cliente = request.form['id_cliente']
+        tipo_identificacion = request.form['tipo_identificacion']
+        numero_identificacion = request.form['numero_identificacion']
+        nombre_completo = request.form['nombre_completo']
+        email = request.form['email']
+        direccion = request.form['direccion']
+        telefono = request.form['telefono']
+
+        if id_cliente and tipo_identificacion and numero_identificacion and nombre_completo and email and direccion and telefono:
+            if db.actualizar_cliente(id_cliente, tipo_identificacion, numero_identificacion, nombre_completo, email, direccion, telefono):
+                # Devuelve un mensaje de éxito
+                return jsonify({'message': 'Cliente editado exitosamente'})
+            else:
+                # Devuelve un mensaje de error
+                return jsonify({'message': 'Cliente no encontrado'})
+        else:
+            # Devuelve un mensaje de error si algún campo está vacío
+            return jsonify({'message': 'Todos los campos son obligatorios'})
+
+
 @app.route("/proveedores")
 def proveedores():
     db_connection, cursor = db.conectar_bd()

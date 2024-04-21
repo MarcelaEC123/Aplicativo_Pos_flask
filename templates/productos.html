@@ -119,10 +119,6 @@
                                     <input type="text" id="nombre_proveedor" name="nombre_proveedor">
                                 </div>
                                 <div class="form-group">
-                                    <label for="stock">Stock</label>
-                                    <input type="text" id="stock" name="stock">
-                                </div>
-                                <div class="form-group">
                                     <label for="valor_unitario">Valor unitario:</label>
                                     <input type="text" id="valor_unitario" name="valor_unitario">
                                 </div>
@@ -134,6 +130,10 @@
                                     <option value="Mililitro">Mililitro</option>
                                     <option value="Centimetro">Centimetro</option>       
                                 </select>
+                                <div class="form-group">
+                                    <label for="stock">Stock</label>
+                                    <input type="text" id="stock" name="stock">
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -151,9 +151,9 @@
                     <th scope="col">Descripcion</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Nombre proveedor</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Unidad_medida</th>
                     <th scope="col">Valor_unitario</th>
+                    <th scope="col">Unidad_medida</th>
+                    <th scope="col">Stock</th>
                     <th scope="col" colspan="3">Acciones</th>
                 </thead>
 
@@ -165,13 +165,13 @@
                         <td>{{d.descripcion}}</td>
                         <td>{{d.categoria}}</td>
                         <td>{{d.nombre_proveedor}}</td>
-                        <td>{{d.stock}}</td>
-                        <td>{{d.unidad_medida}}</td>
                         <td>{{d.valor_unitario}}</td>
+                        <td>{{d.unidad_medida}}</td>
+                        <td>{{d.stock}}</td>
                         <td><button class="btn btn-success btn-sm"
                                 onclick="openStockModal('{{ d.id_producto }}')" data-bs-toggle="modal"
                                 data-bs-target="#stockModal">Agregar Stock</button></td>
-                        <td><button class="btn btn-primary btn-sm" onclick="openEditModal('{{ d.id_producto }}', '{{ d.codigo }}', '{{ d.descripcion }}', '{{ d.categoria }}', '{{ d.id_proveedor }}', '{{ d.nombre_proveedor }}', '{{ d.valor_unitario }}', '{{ d.unidad_medida }}', '{{ d.stock }}')">Editar</button></td>
+                        <td><button class="btn btn-primary btn-sm" onclick="openEditModal('{{ d.id_producto }}', '{{ d.codigo }}', '{{ d.descripcion }}', '{{ d.categoria }}', '{{ d.nombre_proveedor }}', '{{ d.valor_unitario }}', '{{ d.unidad_medida }}', '{{ d.stock }}')">Editar</button></td>
                         <td><a href="{{url_for('delete', id_producto=d.id_producto)}}"
                                 class="btn btn-danger btn-sm">Eliminar</a></td>
                     </tr>
@@ -203,8 +203,8 @@
                 </form>
             </div>
         </div>
-        <!-- Ventana modal para editar -->
 
+        <!-- Ventana modal para editar -->
         <div id="myModal2" class="modal">
             <div class="modal-content">
                 <form id="edit-form" method="post">
@@ -344,7 +344,13 @@
             document.getElementById("myModal2").style.display = "none";
         }
 
-       // Función para enviar el formulario utilizando AJAX
+        // Función para cerrar la ventana modal de edición
+        function closeModal2() {
+            document.getElementById("myModal2").style.display = "none";
+        }
+
+  
+    // Función para enviar el formulario utilizando AJAX
 function submitForm() {
     var formData = new FormData(document.getElementById("edit-form"));
     var xhr = new XMLHttpRequest();
@@ -352,10 +358,12 @@ function submitForm() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 // Si la respuesta es exitosa, muestra el mensaje de respuesta en el modal de edición
-                document.querySelector("#myModal2 .modal-body").innerHTML = xhr.responseText;
+                displayResponse(xhr.responseText);
+                // Cierra la ventana modal de edición después de recibir la respuesta
+                closeModal2();
             } else {
-                // Si hay un error en la respuesta, muestra un mensaje de error
-                document.querySelector("#myModal2 .modal-body").innerHTML = "Error al procesar la solicitud.";
+                // Maneja los errores si es necesario
+                console.error('Error al enviar el formulario:', xhr.status);
             }
         }
     };
@@ -364,12 +372,17 @@ function submitForm() {
 }
 
 
-        // Función para cerrar el modal de respuesta
-        function closeResponseModal() {
-            document.getElementById("response-message").style.display = "none";
-        }
+    // Función para mostrar la respuesta en el modal de edición
+    function displayResponse(response) {
+        document.getElementById("response-message").style.display = "block";
+        document.querySelector("#response-message .modal-content-edit").innerHTML = response;
+    }
+
+    // Función para cerrar el modal de respuesta
+    function closeResponseModal() {
+        document.getElementById("response-message").style.display = "none";
+    }
+
     </script>
-
 </body>
-
 </html>

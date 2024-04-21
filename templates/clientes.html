@@ -82,8 +82,7 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-                    </table>
-
+                </table>
         </div>
 
         <!-- Ventana modal agregar clientes -->
@@ -136,10 +135,11 @@
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="closeModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-default">Guardar cambios</button>
+                    <button type="button" class="btn btn-default" onclick="submitForm()">Guardar cambios</button>
                 </div>
+            </form>
         </div>
-    </div >
+    </div>
 
                 <!-- Ventana modal EDITAR clientes -->
             <div id="myModal2" class="modal">
@@ -154,7 +154,7 @@
                                             <input type="hidden" id="edit_id_cliente" name="id_cliente">
                                             <div class="form-group">
                                                 <label for="edit_tipo_identificacion">Tipo Identificacion:</label>
-                                                <select type="text" id="edit_tipo_identificacion" name="tipo_identificacion">
+                                                <select type="text" id="edit_tipo_identificacion" name="edit_tipo_identificacion">
                                                     <option value="CC">CC</option>
                                                     <option value="ce">CE</option>
                                                     <option value="nit">NIT</option>
@@ -163,37 +163,37 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_numero_identificacion">Numero_Identificacion:</label>
-                                                <input type="text" id="edit_numero_identificacion" name="numero_identificacion">
+                                                <input type="text" id="edit_numero_identificacion" name="edit_numero_identificacion">
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_nombre_completo">Nombre:</label>
-                                                <input type="text" id="edit_nombre_completo" name="nombre_completo">
+                                                <input type="text" id="edit_nombre_completo" name="edit_nombre_completo">
                                             </div>
                                             
                                         </div>
                                         <div class="caja1">
                                             <div class="form-group">
                                                 <label for="edit_email">Email:</label>
-                                                <input type="text" id="edit_email" name="email">
+                                                <input type="text" id="edit_email" name="edit_email">
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_direccion">Direccion:</label>
-                                                <input type="text" id="edit_direccion" name="direccion">
+                                                <input type="text" id="edit_direccion" name="edit_direccion">
                                             </div>
                                             <div class="form-group">
                                                 <label for="edit_elefono">Telefono:</label>
-                                                <input type="text" id="edit_telefono" name="telefono">
+                                                <input type="text" id="edit_telefono" name="edit_telefono">
                                             </div>
                                         </div>
-                                </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" onclick="closeModal2()">Cancelar</button>
-                                        <button type="submit" class="btn btn-default">Guardar cambios</button>
                                     </div>
-                        </form>  
-                    </div>
-            </div >
-
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" onclick="closeModal2()">Cancelar</button>
+                                    <button type="button" class="btn btn-default" onclick="submitForm()">Guardar cambios</button>
+                                </div>
+                        </form>
+                 </div>
+             </div>
+         </div>
 
         <!-- Contenedor para mostrar el mensaje de respuesta -->
         <div id="response-message" class="modal" style="display: none;">
@@ -218,9 +218,6 @@
         function closeModal() {
             document.getElementById("myModal").style.display = "none";}
 
-       
-    </script>
-    <script>
          // Función para abrir la ventana modal de edición y llenar los campos con los detalles del proveedor
          function openEditModal(id_cliente, tipo_identificacion, numero_identificacion, nombre_completo, email, direccion, telefono) {
             document.getElementById("edit_id_cliente").value = id_cliente;
@@ -246,7 +243,9 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         // Si la respuesta es exitosa, muestra el mensaje de respuesta en el modal de edición
-                        document.querySelector("#myModal2 .modal-body").innerHTML = xhr.responseText;
+                        displayResponse(xhr.responseText);
+                        // Cierra la ventana modal de edición después de recibir la respuesta
+                        closeModal2();
                     } else {
                         // Maneja los errores si es necesario
                         console.error('Error al enviar el formulario:', xhr.status);
@@ -257,10 +256,18 @@
             xhr.send(formData);
         }
 
-        // Función para cerrar el modal de respuesta
-        function closeResponseModal() {
-            document.getElementById("response-message").style.display = "none";
-        }
+
+            // Función para mostrar la respuesta en el modal de edición
+            function displayResponse(response) {
+                document.getElementById("response-message").style.display = "block";
+                document.querySelector("#response-message .modal-content-edit").innerHTML = response;
+            }
+
+            // Función para cerrar el modal de respuesta
+            function closeResponseModal() {
+                document.getElementById("response-message").style.display = "none";
+            }
+
     </script>
 
 </body>

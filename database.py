@@ -17,6 +17,37 @@ def conectar_bd():
     except mysql.connector.Error as error:
         raise RuntimeError("Error de conexión a la base de datos:", error)
 
+def actualizar_cliente(id_cliente, tipo_Identificacion, numero_identificacion, nombre_completo, email, direccion, telefono):
+    try:
+        db_connection, cursor = conectar_bd()
+        if db_connection is None or cursor is None:
+            return False
+        sql = "UPDATE cliente SET tipo_identificacion = %s, numero_identificacion = %s, nombre_completo = %s, email = %s, direccion = %s, telefono = %s WHERE id_ = %s"
+        data = ( tipo_Identificacion, numero_identificacion, nombre_completo, email, direccion, telefono, id_cliente)
+        cursor.execute(sql, data)
+        db_connection.commit()
+        cursor.close()
+        db_connection.close()
+        return True
+    except mysql.connector.Error as error:
+        print("Error al actualizar cliente:", error)
+        return False
+
+def actualizar_proveedor(id_proveedor, tipo_Identificacion, numero_identificacion, nombre_proveedor, email, direccion, telefono, dia_de_visita, dia_de_entrega):
+    try:
+        db_connection, cursor = conectar_bd()
+        if db_connection is None or cursor is None:
+            return False
+        sql = "UPDATE proveedor SET tipo_identificacion = %s, numero_identificacion = %s, nombre_proveedor = %s, email = %s, direccion = %s, telefono = %s, dia_de_visita = %s, dia_de_entrega = %s  WHERE id_proveedor = %s"
+        data = ( tipo_Identificacion, numero_identificacion, nombre_proveedor, email, direccion, telefono, dia_de_visita, dia_de_entrega, id_proveedor)
+        cursor.execute(sql, data)
+        db_connection.commit()
+        cursor.close()
+        db_connection.close()
+        return True
+    except mysql.connector.Error as error:
+        print("Error al actualizar proveedor:", error)
+        return False
 
 
 def actualizar_producto(id_producto, codigo, descripcion, categoria, nombre_proveedor, valor_unitario, unidad_medida, stock):
@@ -40,7 +71,7 @@ def actualizar_usuario(id_usuario, nombre, tipo_Identificacion, numero_identific
         db_connection, cursor = conectar_bd()
         if db_connection is None or cursor is None:
             return False
-        sql = "UPDATE usuarios SET nombre = %s, tipo_identificacion = %s, numero_identificacion = %s, telefono = %s, email = %s, usuario = %s, contrasenia = %s, tipo_usuario = %s WHERE id_usuario = %s"
+        sql = "UPDATE usuario SET nombre = %s, tipo_identificacion = %s, numero_identificacion = %s, telefono = %s, email = %s, usuario = %s, contrasenia = %s, tipo_usuario = %s WHERE id_usuario = %s"
         data = (nombre, tipo_Identificacion, numero_identificacion, telefono, email, usuario, contrasenia, tipo_usuario, id_usuario)
         cursor.execute(sql, data)
         db_connection.commit()
