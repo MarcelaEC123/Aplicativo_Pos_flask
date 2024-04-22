@@ -213,7 +213,7 @@
                     </thead>
                     <tbody>
                             `;
-                            console.log(productos[0].codigo);
+                            console.log(productos[0]);
                             productos.forEach(function (producto) {
                                 productosHTML += `
                                     <tr>
@@ -261,7 +261,6 @@
         function obtenerInformacionProducto1() {
         var codigoProducto = document.getElementById('producto-codigo').value;
             
-
         fetch('http://127.0.0.1:5000/users/' + codigoProducto)
             .then(response => response.json())
             .then(data => {
@@ -302,9 +301,5 @@
         agregarProducto();
      }
 </script>
-
-
-
 </body>
-
 </html>

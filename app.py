@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for
 #11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
 
 
 @app.route("/")
@@ -193,9 +193,9 @@ def generar_ticket(id_venta):
 # Ruta para mostrar los detalles de la venta OK
 @app.route('/detalle_venta.html/<id_venta>')
 def detalle_venta(id_venta):
-    venta = obtener_venta(id_venta) 
+    
      # Reemplaza esto con tu lógica para obtener los detalles de la venta
-    return render_template('detalle_venta.html', venta=venta)
+   
 # Definir el endpoint para guardar los detalles de la venta
     db_connection, cursor = db.conectar_bd()
     # Ejecuta una consulta para obtener los detalles de la venta con el id_venta proporcionado
@@ -217,7 +217,7 @@ def guardar_detalles_venta():
         cantidad = request.form['cantidad']
         valor_unitario = request.form['valor_unitario']
         id_venta = request.form['id_venta']  # Este valor puede cambiar según tu lógica
-        codigo = request.form['codigo']  # Este valor puede cambiar según tu lógica
+        codigo = int(request.form['codigo'])  # Este valor puede cambiar según tu lógica
         
         # Realizar la inserción en la tabla detalle_venta
         db_connection, cursor = db.conectar_bd()
