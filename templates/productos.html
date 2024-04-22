@@ -285,7 +285,7 @@
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" onclick="closeModal2()">Cancelar</button>
-                        <button type="button" class="btn btn-default" onclick="submitForm()">Guardar cambios</button>
+                        <button type="button" class="btn btn-default" onclick="submitForm1()">Guardar cambios</button>
                     </div>
                 </form>
             </div>
@@ -351,7 +351,7 @@
 
   
     // Función para enviar el formulario utilizando AJAX
-function submitForm() {
+function submitForm1() {
     var formData = new FormData(document.getElementById("edit-form"));
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {

@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for
 #11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 import database as db
 
-app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
+app = Flask(__name__, template_folder="C:\\Users\\lenovo\\OneDrive\\Desktop\\UNIAGUSTINIANA\\Sexto Semestre\\Proyecto\\Aplicativo_Pos_flask\\templates")
 
 
 @app.route("/")
@@ -39,6 +39,7 @@ def login():
 
 
 
+    
 # Ruta para la página principal
 @app.route("/principal")
 def principal():
@@ -176,53 +177,71 @@ def generar_ticket(id_venta):
     except Exception as e:
         return f"Error al generar el ticket: {str(e)}"
 
-#FUNCION PARA MOSTRART DETALLES DE VENTA
-def obtener_venta(id_venta):
-    # Aquí iría tu lógica para obtener los detalles de la venta
-    # Por ahora, simplemente devolveré un diccionario ficticio con datos de ejemplo
-    return {
-        'id': 1,
-        'id_factura': 'FAC001',
-        'medio_pago': 'Efectivo',
-        'descuento': 10,
-        'iva': 5,
-        'fecha_registro': '2024-04-15',
-        'total_a_pagar': 100,
-        'id_cliente': 123
-    }
+# # Función para obtener los detalles de venta desde la base de datos MySQL
+# def obtener_venta(id_venta):
+#     # Configura la conexión a tu base de datos MySQL
+#     db_connection, cursor = db.conectar_bd()
 
+#     # Ejecuta una consulta para obtener los detalles de la venta con el id_venta proporcionado
+#     cursor.execute("SELECT * FROM venta WHERE id_venta = %s", (id_venta,))
+#     venta_db = cursor.fetchone()  # Obtiene el primer resultado
+#     # Cierra la conexión con la base de datos
+#     cursor.close()
+#     # Retorna los detalles de la venta si se encontraron en la base de datos
+#     return venta_db
+
+# Ruta para mostrar los detalles de la venta OK
 @app.route('/detalle_venta.html/<id_venta>')
 def detalle_venta(id_venta):
     venta = obtener_venta(id_venta) 
      # Reemplaza esto con tu lógica para obtener los detalles de la venta
     return render_template('detalle_venta.html', venta=venta)
 # Definir el endpoint para guardar los detalles de la venta
+    db_connection, cursor = db.conectar_bd()
+    # Ejecuta una consulta para obtener los detalles de la venta con el id_venta proporcionado
+    cursor.execute("SELECT * FROM venta WHERE id_venta = %s", (id_venta,))
+    venta_db = cursor.fetchone()  # Obtiene el primer resultado
+    # Cierra la conexión con la base de datos
+    cursor.close()
+    # Renderiza la plantilla con los detalles de la venta de la base de datos
+    return render_template('detalle_venta.html', venta=venta_db)
 
 
 
+#GUARDAR LOS DETALES DE LA VENTA
 @app.route('/guardar_detalles_venta', methods=['POST'])
 def guardar_detalles_venta():
-    # Aquí manejas la lógica para guardar los detalles de la venta
-    return 'Detalles de la venta guardados correctamente'
-
-def obtener_informacion_desde_bd(codigo_producto):
     try:
+        # Obtener los datos del formulario
+        descripcion = request.form['descripcion']
+        cantidad = request.form['cantidad']
+        valor_unitario = request.form['valor_unitario']
+        id_venta = request.form['id_venta']  # Este valor puede cambiar según tu lógica
+        codigo = request.form['codigo']  # Este valor puede cambiar según tu lógica
+        
+        # Realizar la inserción en la tabla detalle_venta
         db_connection, cursor = db.conectar_bd()
         if db_connection is None or cursor is None:
             return None
 
-        sql = "SELECT descripcion, valor_unitario FROM producto WHERE codigo = %s"
-        print("Consulta SQL:", sql)  # Imprimir la consulta SQL para depuración
-        cursor.execute(sql, (codigo_producto,))
-        producto_data = cursor.fetchone()
+        sql = "INSERT INTO detalle_venta (descripcion, cantidad, valor_unitario, id_venta, codigo) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(sql, ( descripcion, cantidad, valor_unitario, id_venta, codigo))
+        db_connection.commit()
+
         cursor.close()
         db_connection.close()
 
-        print("Datos del producto obtenidos:", producto_data)  # Imprimir los datos obtenidos para depuración
-        return producto_data
-    except MySQLdb.MySQLError.connector.Error as error:
-        print("Error al obtener información del producto desde la base de datos:", error)
-        return None
+        return ("Detalles de venta guardados exitosamente.")
+        
+    except:
+        print("Error al guardar detalles de venta:")
+        return "Error al guardar detalles de venta."
+
+
+# @app.route('/generar_ticket/<id_venta>')
+# def generar_ticket(id_venta):
+#     # Lógica para generar el ticket
+#     return render_template('factura.html', id_venta=id_venta)
 
 @app.route("/clientes")
 def clientes():
