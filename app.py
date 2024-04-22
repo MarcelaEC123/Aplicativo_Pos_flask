@@ -1,3 +1,4 @@
+
 import MySQLdb
 from flask import Flask, jsonify, request, render_template, redirect, url_for
 
@@ -7,6 +8,7 @@ from flask import Flask, jsonify, request, render_template, redirect, url_for
 import database as db
 
 app = Flask(__name__, template_folder="C:\\Users\\cindy\\OneDrive\\Documentos\\PROYECTOS\\Aplicativo_Pos_flask\\templates")
+
 
 @app.route("/")
 def index():
@@ -34,6 +36,9 @@ def login():
     except Exception as e:
         error_message = "Error al procesar la solicitud: {}".format(str(e))
         return render_template("mensaje.html", message=error_message)
+
+
+
 # Ruta para la página principal
 @app.route("/principal")
 def principal():
@@ -188,7 +193,7 @@ def obtener_venta(id_venta):
 
 @app.route('/detalle_venta.html/<id_venta>')
 def detalle_venta(id_venta):
-    venta = obtener_venta() 
+    venta = obtener_venta(id_venta) 
      # Reemplaza esto con tu lógica para obtener los detalles de la venta
     return render_template('detalle_venta.html', venta=venta)
 # Definir el endpoint para guardar los detalles de la venta
