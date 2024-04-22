@@ -111,50 +111,57 @@
             <input type="hidden" id="id_venta" name="id_venta" value="1"> <!-- Este valor puede cambiar según tu lógica -->
             <input type="hidden" id="id_producto" name="id_producto" value="1"> <!-- Este valor puede cambiar según tu lógica -->
             <button type="button" onclick="agregarProducto()">Agregar Producto</button>
+            <button type="submit" onclick="agregarProductoVenta()">Guardar Detalles de Venta</button>
         </form>
-        <div class="productos" id="productos"></div>
+        
+         <div class="productos" id="verProductos"></div>
+        <!-- <form  method="post">
+             <input type="hidden" name="venta_id" value="{{ venta.id }}">
+            <input type="hidden" name="total_a_pagar" id="total-a-pagar">
+        
+        </form> -->
     </div>
-
+            
     <script>
 
         // Obtener la venta desde el backend
-        var venta = JSON.parse('{{ venta | tojson }}');
-
+        var venta = JSON.parse('{{ venta | tojson | safe }}');
+   
         // Función para mostrar los detalles de la venta
         function mostrarDetalleVenta() {
             var detalleVentaHTML = `
                 <table class="venta-details">
                     <tr>
                         <th>ID Venta</th>
-                        <td>${venta.id}</td>
+                        <td>${venta[0]}</td>
                     </tr>
                     <tr>
                         <th>ID Factura</th>
-                        <td>${venta.id_factura}</td>
+                        <td>${venta[1]}</td>
                     </tr>
                     <tr>
                         <th>Medio de Pago</th>
-                        <td>${venta.medio_pago}</td>
+                        <td>${venta[2]}</td>
                     </tr>
                     <tr>
                         <th>Descuento</th>
-                        <td>${venta.descuento}</td>
+                        <td>${venta[3]}</td>
                     </tr>
                     <tr>
                         <th>IVA</th>
-                        <td>${venta.iva}</td>
+                        <td>${venta[4]}</td>
                     </tr>
                     <tr>
                         <th>Fecha de Registro</th>
-                        <td>${venta.fecha_registro}</td>
+                        <td>${venta[5]}</td>
                     </tr>
                     <tr>
                         <th>Total a Pagar</th>
-                        <td id="total-a-pagar">${venta.total_a_pagar}</td>
+                        <td id="total-a-pagar">${venta[7]}</td>
                     </tr>
                     <tr>
                         <th>ID Cliente</th>
-                        <td>${venta.id_cliente}</td>
+                        <td>${venta[8]}</td>
                     </tr>
                              
                 </table>
@@ -192,36 +199,36 @@
 
         // Función para mostrar los productos en la página
         function mostrarProductos() {
-            var productosHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Cantidad</th>
-                            <th>Descripción</th>
-                            <th>Valor Unitario</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            // var productosHTML = `
+            //     <table>
+            //         <thead>
+            //             <tr>
+            //                 <th>Código</th>
+            //                 <th>Cantidad</th>
+            //                 <th>Descripción</th>
+            //                 <th>Valor Unitario</th>
+            //             </tr>
+            //         </thead>
+            //         <tbody>
+            // `;
 
-            productos.forEach(function (producto) {
-                productosHTML += `
-                    <tr>
-                        <td>${producto.codigo}</td>
-                        <td>${producto.cantidad}</td>
-                        <td>${producto.descripcion}</td>
-                        <td>${producto.valor_unitario}</td>
-                    </tr>
-                `;
-            });
+            // productos.forEach(function (producto) {
+            //     productosHTML += `
+            //         <tr>
+            //             <td>${producto.codigo}</td>
+            //             <td>${producto.cantidad}</td>
+            //             <td>${producto.descripcion}</td>
+            //             <td>${producto.valor_unitario}</td>
+            //         </tr>
+            //     `;
+            // });
 
-            productosHTML += `
-                    </tbody>
-                </table>
-            `;
+            // productosHTML += `
+            //         </tbody>
+            //     </table>
+            // `;
 
-            document.getElementById('productos').innerHTML = productosHTML;
+            // document.getElementById('verProductos').innerHTML = productosHTML;
         }
 
         // Función para actualizar el total a pagar
@@ -253,7 +260,6 @@
         var codigoProducto = document.getElementById('producto-codigo').value;
             
 
-        
         fetch('http://127.0.0.1:5000/users/' + codigoProducto)
             .then(response => response.json())
             .then(data => {
@@ -264,9 +270,78 @@
             .catch (error=>alert('Producto no encontrado'))
         }   
 
-
-
     </script>
+    <!-- Agrega este script para manejar el evento click del botón Agregar Producto -->
+<script>
+    function agregarProductoVenta() {
+        // Obtener los valores de los campos del formulario
+        var codigo = document.getElementById("producto-codigo").value;
+        var descripcion = document.getElementById("producto-descripcion").value;
+        var cantidad = document.getElementById("producto-cantidad").value;
+        var valor_unitario = document.getElementById("producto-valor-unitario").value;
+        var id_venta = document.getElementById("id_venta").value;  // Este valor puede cambiar según tu lógica
+        var id_producto = document.getElementById("id_producto").value;  // Este valor puede cambiar según tu lógica
+        alert(descripcion)
+        
+        // Enviar los datos al backend
+        fetch('/guardar_detalles_venta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                codigo: codigo,
+                descripcion: descripcion,
+                cantidad: cantidad,
+                valor_unitario: valor_unitario,
+                id_venta: id_venta,
+                id_producto: id_producto
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            // Aquí puedes agregar lógica adicional si es necesario
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+        var productosHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cantidad</th>
+                            <th>Descripción</th>
+                            <th>Valor Unitario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            productos.forEach(function (producto) {
+                productosHTML += `
+                    <tr>
+                        <td>${producto.codigo}</td>
+                        <td>${producto.cantidad}</td>
+                        <td>${producto.descripcion}</td>
+                        <td>${producto.valor_unitario}</td>
+                    </tr>
+                `;
+            });
+
+            productosHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('verProductos').innerHTML = productosHTML;
+    }
+</script>
+
+
+
 </body>
 
 </html>
