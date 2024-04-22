@@ -208,21 +208,22 @@ def guardar_detalles_venta():
         cantidad = request.form['cantidad']
         valor_unitario = request.form['valor_unitario']
         id_venta = request.form['id_venta']  # Este valor puede cambiar según tu lógica
-        id_producto = request.form['id_producto']  # Este valor puede cambiar según tu lógica
+        codigo = request.form['codigo']  # Este valor puede cambiar según tu lógica
         
         # Realizar la inserción en la tabla detalle_venta
         db_connection, cursor = db.conectar_bd()
         if db_connection is None or cursor is None:
             return None
 
-        sql = "INSERT INTO detalle_venta (descripcion, cantidad, valor_unitario, id_venta, id_producto) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(sql, ( descripcion, cantidad, valor_unitario, id_venta, id_producto))
+        sql = "INSERT INTO detalle_venta (descripcion, cantidad, valor_unitario, id_venta, codigo) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(sql, ( descripcion, cantidad, valor_unitario, id_venta, codigo))
         db_connection.commit()
 
         cursor.close()
         db_connection.close()
 
-        return "Detalles de venta guardados exitosamente."
+        return ("Detalles de venta guardados exitosamente.")
+        
     except:
         print("Error al guardar detalles de venta:")
         return "Error al guardar detalles de venta."
